@@ -1,0 +1,9 @@
+{
+  "pageOne": {
+    "headline": "This is a headline"
+  },
+  "pageTwo": {
+    "description": "This is a description with {{ params }}!",
+    "headline": "Another description {{ with }} {{two}} params!"
+  }
+}

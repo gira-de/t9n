@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2017",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "newLine": "LF",
+    "allowSyntheticDefaultImports": true
+  }
+}

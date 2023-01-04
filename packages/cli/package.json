@@ -1,0 +1,57 @@
+{
+  "name": "@gira/t9n-svelte",
+  "version": "1.0.4",
+  "author": "GIRA",
+  "contributors": [
+    "Christian Krey <christian@krey.io>",
+    "Nico Beierle <nico.beierle@bztes.de>"
+  ],
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "t9n": "./bin/cli.js"
+  },
+  "dependencies": {
+    "conf": "^10.1.1",
+    "meow": "^10.1.2",
+    "ora": "^6.1.0",
+    "prettier": "^2.5.1",
+    "xlsx": "^0.18.3"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
+    "@types/jest": "^27.4.0",
+    "jest": "^27.5.1",
+    "jest-junit": "^13.0.0",
+    "rollup": "^2.67.2",
+    "rollup-plugin-preserve-shebang": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "semantic-release": "^19.0.2",
+    "ts-jest": "^27.1.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.0"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test:unit": "jest ./src",
+    "test:unit:ci": "yarn test:unit --ci --reporters='default' --reporters='jest-junit' --coverage",
+    "test:e2e": "yarn build && jest ./tests",
+    "test:e2e:ci": "yarn test:e2e -ci",
+    "test": "yarn test:unit && yarn test:e2e",
+    "test-manual:typedefs": "node ./bin/cli.js typedefs tests/fixtures/meta.json --output out/index.d.ts",
+    "test-manual:export": "node ./bin/cli.js export tests/fixtures --output out",
+    "test-manual:import": "node ./bin/cli.js import out/translation.xlsx --output out",
+    "test-manual:check": "node ./bin/cli.js check tests/fixtures"
+  },
+  "files": [
+    "./bin/",
+    "./lib/",
+    "./types/",
+    "./package.json",
+    "./README.md"
+  ]
+}

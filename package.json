@@ -1,0 +1,16 @@
+{
+  "private": "true",
+  "name": "t9n",
+  "version": "0.0.1",
+  "description": "A tiny Node.js based CLI that provides some tools to improve all things around i18n and a Svelte Store to enable typesafe internationalization.",
+  "author": "GIRA",
+  "contributors": [
+    "Christian Krey <christian@krey.io>",
+    "Nico Beierle <nico.beierle@bztes.de>"
+  ],
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ]
+}
