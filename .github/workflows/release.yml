@@ -16,6 +16,7 @@ jobs:
       - run: yarn test
 
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,8 +24,10 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+          scope: "@gira-de"
       - run: yarn --immutable
       - run: yarn build
-      - run: yarn npm publish
+      - run: yarn workspace @gira-de/t9n-cli publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          YARN_REGISTRY: 'https://registry.npmjs.org'
