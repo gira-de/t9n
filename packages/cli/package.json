@@ -6,8 +6,19 @@
     "Christian Krey <christian@krey.io>",
     "Nico Beierle <nico.beierle@bztes.de>"
   ],
-  "main": "./lib/index.js",
-  "types": "./types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gira-de/t9n.git"
+  },
+  "keywords": [
+    "t9n",
+    "translation",
+    "i18n",
+    "cli"
+  ],
+  "bugs": {
+    "url": "https://github.com/gira-de/t9n/issues"
+  },
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -24,11 +35,9 @@
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/jest": "^27.4.0",
     "jest": "^27.5.1",
-    "jest-junit": "^13.0.0",
     "rollup": "^2.67.2",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "rollup-plugin-typescript2": "^0.31.2",
-    "semantic-release": "^19.0.2",
     "ts-jest": "^27.1.3",
     "tslib": "^2.3.1",
     "typescript": "^4.6.0"
@@ -38,7 +47,6 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test:unit": "jest ./src",
-    "test:unit:ci": "yarn test:unit --ci --reporters='default' --reporters='jest-junit' --coverage",
     "test:e2e": "yarn build && jest ./tests",
     "test:e2e:ci": "yarn test:e2e -ci",
     "test": "yarn test:unit && yarn test:e2e",
@@ -49,8 +57,6 @@
   },
   "files": [
     "./bin/",
-    "./lib/",
-    "./types/",
     "./package.json",
     "./README.md"
   ]
