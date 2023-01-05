@@ -15,7 +15,7 @@ jobs:
       - run: yarn --immutable
       - run: yarn test
 
-  build:
+  release:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +27,7 @@ jobs:
           scope: "@gira-de"
       - run: yarn --immutable
       - run: yarn build
-      - run: yarn workspace @gira-de/t9n-cli publish
+      - run: yarn workspace @gira-de/t9n-cli npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           YARN_REGISTRY: 'https://registry.npmjs.org'
