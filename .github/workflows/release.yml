@@ -27,11 +27,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: '16.14.1'
           registry-url: 'https://registry.npmjs.org'
           scope: '@gira-de'
+          cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r run build
       - run: pnpm -r publish
