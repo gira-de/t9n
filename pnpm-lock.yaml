@@ -12,6 +12,7 @@ importers:
     specifiers:
       '@trivago/prettier-plugin-sort-imports': ^3.2.0
       '@types/jest': ^27.4.0
+      '@types/node': ^18.11.18
       conf: ^10.1.1
       jest: ^27.5.1
       meow: ^10.1.2
@@ -33,6 +34,7 @@ importers:
     devDependencies:
       '@trivago/prettier-plugin-sort-imports': 3.4.0_prettier@2.8.1
       '@types/jest': 27.5.2
+      '@types/node': 18.11.18
       jest: 27.5.1
       rollup: 2.79.1
       rollup-plugin-preserve-shebang: 1.0.1
