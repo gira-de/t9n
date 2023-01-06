@@ -2,9 +2,7 @@
   import de from '../locale/de.json';
   import meta from '../locale/meta.json';
   import type { TranslationArgs } from '../locale/types';
-  import svelteLogo from './assets/svelte.svg';
-  import Counter from './lib/Counter.svelte';
-  import { newT9n } from '@gira/t9n-svelte';
+  import { newT9n } from '@gira-de/t9n-svelte';
 
   // dictionary with all languages
   const languages = [
@@ -31,63 +29,85 @@
   // logging functions
   const logFallback = (translationKey: string, currentLanguage: string) =>
     console.warn(
-      `[i18n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the fallback language: «${fallbackLanguage.locale}».`,
+      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the fallback language: «${fallbackLanguage.locale}».`,
     );
 
   const logMissing = (translationKey: string, currentLanguage: string) =>
     console.warn(
-      `[i18n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Neither does the fallback language.`,
+      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Neither does the fallback language.`,
     );
 
-  const { t, ti } = newT9n<TranslationArgs>()({
+  const { locale, t, ti } = newT9n<TranslationArgs>()({
     languages,
     fallbackLanguage,
     logFallback,
     logMissing,
   });
+
+  let selected: 'meta' | 'de' | 'en';
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <h1>@gira-de/t9n-svelte</h1>
+
+  <form on:submit|preventDefault>
+    <label for="languageSelection">Select Language</label>
+    <select
+      id="languageSelection"
+      bind:value={selected}
+      on:change={() => locale.set(selected)}
+    >
+      {#each languages as language}
+        <option value={language.locale}
+          >{language.name} ({language.locale})</option
+        >
+      {/each}
+    </select>
+  </form>
+
+  <div id="content">
+    <h2>{$t('pageOne.headline')}</h2>
+
+    <div class="card">
+      <div>Current language: <strong>{$locale}</strong></div>
+      <div>
+        Translation key found in: <strong>{$ti('pageOne.headline').hit}</strong>
+      </div>
+    </div>
   </div>
-  <h1>{$t('pageOne.headline')}</h1>
 
-  <!-- <p>{JSON.stringify($ti('pageTwo.headline'))}</p> -->
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a
+  <footer>
+    This example is based on <a
+      href="https://vitejs.dev/guide/#scaffolding-your-first-vite-project"
+      target="_blank"
+      rel="noreferrer">Vite</a
+    >. Check out
+    <a
       href="https://github.com/sveltejs/kit#readme"
       target="_blank"
       rel="noreferrer">SvelteKit</a
     >, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+  </footer>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  select {
+    padding: 5px 8px;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  #content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .read-the-docs {
-    color: #888;
+
+  footer {
+    padding-top: 35px;
   }
 </style>
