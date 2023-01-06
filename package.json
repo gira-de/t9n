@@ -10,13 +10,7 @@
   ],
   "main": "index.js",
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "yarn workspaces run build",
-    "build:cli": "yarn workspace @gira/t9n-cli build",
-    "test": "yarn workspaces run test",
-    "test:cli": "yarn workspace @gira/t9n-cli test"
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0"
   }
 }
