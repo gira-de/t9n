@@ -1,6 +1,6 @@
 {
   "name": "@gira-de/t9n-cli",
-  "version": "0.0.2-3",
+  "version": "0.0.2",
   "author": "GIRA",
   "contributors": [
     "Christian Krey <christian@krey.io>",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/jest": "^27.4.0",
+    "@types/node": "^18.11.18",
     "jest": "^27.5.1",
     "rollup": "^2.67.2",
     "rollup-plugin-preserve-shebang": "^1.0.1",

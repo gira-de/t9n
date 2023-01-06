@@ -3,15 +3,21 @@ name: CI/CD
 on:
   push:
     branches: [main, dev]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - run: yarn --immutable
-      - run: yarn build
-      - run: yarn test
+          node-version: '16.14.1'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r run build
+      - run: pnpm -r run test
