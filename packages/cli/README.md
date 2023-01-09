@@ -1,25 +1,25 @@
 # T9N CLI
 
-> A tiny Node.js based CLI that provides some tools to improve all things around i18n and a Svelte Store to enable typesafe internationalization.
+> A tiny Node.js based CLI that provides some tools to improve all things around t9n (translation) and i18n (internationalization).
 
 ## What is this for?
 
-This lib is designed to support developers as well as translators and make their life easier. It:
+This cli is designed to support developers as well as translators and make their life easier. It...
 
-- 📖 Makes translation keys type safe.
+- 📝 Makes it easy to create a list of type safe translation keys. 
+- 🪄 Makes it transform these translation keys into something translation agencies can work with (xlsx 🤩).
 - 🚨 Shows developers and other stakeholders if translations are missing.
-- 👜 Makes it easy to create a list of all used translation keys and extract something translation agencies can work with (xlsx ftw 👍).
-- 🛬 Allows seamless imports of new translations.
+- 🛬 Allows seamless imports of new translations provided by a translation agency.
 
 ### The Workflow
 
-Everything in this lib is built around the following workflow. Sure, use it however you like, but this was in our mind when we created it.
+Everything here is built around the following workflow. Sure, use it however you like, but this was in our mind when we created it.
 
-1. Install this package ➡️ [Installation](##Installation)
-2. Put all translation keys in the file (_meta.json_) and run `t9n typedefs <filename>` whenever it changes ➡️ [CLI Docs](/docs/cli.md)
-3. Once the translations is created, run `t9n export <folderpath>` to create a xlsx-sheet for all translation keys. ➡️ [CLI Docs](/docs/cli.md)
-4. Once the translation is done, import the translated xlsx with `t9n import <filename>` to create json files for every defined language. ➡️ [CLI Docs](/docs/cli.md)
-5. To use these new translations adjust your config, if neccessary. ➡️ [Store Docs](/docs/store.md)
+1. Install this package.
+2. Put all translation keys in a file called _meta.json_ and run `t9n typedefs <filename>` whenever it changes to create a typescript declaration file. Use this declaration file with your translation library to use your translation keys safe. (💡 Using Svelte? Use our [Svelte Wrapper](/packages/svelte/README.md) to make life even easier.)
+3. If it is time to get some actual translations, run `t9n export <folderpath>` to create a xlsx-sheet with all translation keys. Send this to your translation agency.
+4. Once the translation is done, import the translated xlsx with `t9n import <filename>` to create json files for every defined language. Like _en.json_, _de.json_,... .
+5. Repeat. 
 
 ## Installation
 
