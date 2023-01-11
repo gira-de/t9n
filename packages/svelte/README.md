@@ -2,6 +2,8 @@
 
 > A Svelte internationalization (i18n) solution for @gira-de/t9n.
 
+See a working example here: [t9n@Stackblitz](https://stackblitz.com/github/gira-de/t9n/tree/dev/examples/svelte-t9n).
+
 ## Initialization
 
 To get started, the following files are required:
