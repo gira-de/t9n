@@ -1,4 +1,4 @@
-import { newT9n } from '.';
+import t9n from '.';
 import { noop } from 'svelte/internal';
 import { get } from 'svelte/store';
 
@@ -61,7 +61,7 @@ const {
   getLocaleStringFromNumber,
   $t,
   $ti,
-} = newT9n<TranslationArgs>()({
+} = t9n<TranslationArgs>()({
   languages,
   fallbackLanguage,
   logFallback: noop,
