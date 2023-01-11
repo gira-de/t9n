@@ -2,7 +2,7 @@
   import de from '../locale/de.json';
   import meta from '../locale/meta.json';
   import type { TranslationArgs } from '../locale/types';
-  import { newT9n } from '@gira-de/t9n-svelte';
+  import t9n from '@gira-de/t9n-svelte';
 
   // dictionary with all languages
   const languages = [
@@ -37,7 +37,7 @@
       `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Neither does the fallback language.`,
     );
 
-  const { locale, t, ti } = newT9n<TranslationArgs>()({
+  const { locale, t, ti } = t9n<TranslationArgs>()({
     languages,
     fallbackLanguage,
     logFallback,
