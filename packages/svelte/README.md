@@ -1,6 +1,6 @@
 # t9n Lib
 
-> A custom internationalization (i18n) solution for the "Türko-IP Großprojekte Wizard".
+> A Svelte internationalization (i18n) solution for @gira-de/t9n.
 
 ## Initialization
 
@@ -16,7 +16,7 @@ _./locale/meta.json: This json describes the structure of the actual language fi
 }
 ```
 
-_../locale/de.json: The actual language file_
+_./locale/de.json: The actual language file_
 
 ```json
 {
@@ -26,93 +26,75 @@ _../locale/de.json: The actual language file_
 }
 ```
 
-Now _de.json_ can be referenced within a config file to initialize a t9n instance:
+Now _de.json_ can be referenced during initialization of the t9n library:
 
-_./locale.ts_
+\_./src/App.svelte
+
+```svelte
+<script lang="ts">
+  import de from '../locale/de.json';
+  import meta from '../locale/meta.json';
+  import type { TranslationArgs } from '../locale/types';
+  import t9n from '@gira-de/t9n-svelte';
+
+  // dictionary with all languages
+  const languages = [
+    {
+      locale: 'meta',
+      name: 'Developer',
+      dictionary: meta,
+    },
+    {
+      locale: 'de',
+      name: 'German',
+      dictionary: de,
+    },
+    {
+      locale: 'en',
+      name: 'English',
+      dictionary: {},
+    },
+  ] as const;
+
+  // default language
+  const fallbackLanguage = languages[0];
+
+  // logging functions
+  const logFallback = (translationKey: string, currentLanguage: string) =>
+    console.warn(
+      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the fallback language: «${fallbackLanguage.locale}».`,
+    );
+
+  const logMissing = (translationKey: string, currentLanguage: string) =>
+    console.warn(
+      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Neither does the fallback language.`,
+    );
+
+  // locale, t and ti are Svelte Stores. Use the locale Store to change the language and t/ti to get the translation.
+  const { locale, t, ti } = t9n<TranslationArgs>()({
+    languages,
+    fallbackLanguage,
+    logFallback,
+    logMissing,
+  });
+
+  let selected: 'meta' | 'de' | 'en';
+</script>
+```
+
+## Usage
+
+### Get translations
+
+To finally get translation by keys, you can use `t` or `ti` Svelte Stores:
 
 ```typescript
-import de from '../locale/de.json';
-import meta from '../locale/meta.json';
-
-// dictionary with all languages
-const languages = [
-  {
-    locale: 'meta',
-    name: 'Developer',
-    dictionary: meta,
-  },
-  {
-    locale: 'de',
-    name: 'German',
-    dictionary: de,
-  },
-  {
-    locale: 'en',
-    name: 'English',
-    dictionary: {},
-  },
-] as const;
-
-// default language
-const fallbackLanguage = languages[0];
-
-// logging functions
-const logFallback = (translationKey: string, currentLanguage: string) =>
-  logWarn(
-    `[i18n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the fallback language: «${fallbackLanguage.locale}».`,
-  );
-
-const logMissing = (translationKey: string, currentLanguage: string) =>
-  logWarn(
-    `[i18n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Neither does the fallback language.`,
-  );
-
-const t9n = newT9n<TranslationArgs>()({
+const { locale, t, ti } = t9n<TranslationArgs>()({
   languages,
   fallbackLanguage,
   logFallback,
   logMissing,
 });
-
-// export all properties/stores/functions that are used by the application
-export const locale = t9n.locale;
-export const t = t9n.t;
-export const $t = t9n.$t;
-export const ti = t9n.ti;
-export const $ti = t9n.$ti;
-export const getLocaleDateString = t9n.getLocaleDateString;
-export const getLocaleTimeString = t9n.getLocaleTimeString;
-export const getLocaleStringFromNumber = t9n.getLocaleStringFromNumber;
-```
-
-## RFC 5646
-
-As described in [RFC 5646: Tags for Identifying Languages (also known as BCP 47)](https://datatracker.ietf.org/doc/html/rfc5646) language tags with subtags are allow. For example:
-
-```typescript
-const languages = [
-  //...
-  {
-    locale: 'en',
-    name: 'English',
-    dictionary: en,
-  },
-  {
-    locale: 'en-US',
-    name: 'English (US)',
-    dictionary: enUS,
-  },
-] as const;
-```
-
-As soon as these steps are done, you can start with the actual translation.
-
-## Usage
-
-To finally get translation by keys, you can use `t` or `ti` Svelte Store within Svelte files:
-
-```typescript
-import { t, ti } from '../locale';
 
 // Returns the translated string
 $t(['pageOne.headline']);
@@ -123,19 +105,7 @@ $ti(['pageOne.headline']);
 
 If you like you can turn these command into a Svelte component and print styles based on the hit information. See [Create a T component](##Create-a-T-component) for more.
 
-Outside a Svelte file you should use the exported helpers:
-
-```typescript
-import { $t, $ti } from '../locale';
-
-// Returns the translated string
-$t(['pageOne.headline']);
-
-// Returns an object with the hit information and the actual text
-$ti(['pageOne.headline']);
-```
-
-To translate dates, times or numbers use the following functions:
+### Translate numbers and dates
 
 ```typescript
 getLocaleDateString(new Date()),
@@ -150,14 +120,16 @@ Those functions are derived from `Date.prototype.toLocal...` functions: [MDN Web
 To set the language use the `locale` method. If you want to detect the language automatically use the following code:
 
 ```typescript
-//For example within your App.svelte
+const { locale } = t9n<TranslationArgs>()({...});
 
-t9n.locale.trySet(navigator.language);
+locale.trySet(navigator.language);
 ```
 
 ### Create a T component
 
-```typescript
+If you like you can turn the `t` and `ti` Svelte Stores into a Svelte component and print styles based on the hit information.
+
+```svelte
 <script lang="ts">
   import { t, ti } from './locale';
   import type { TranslationArgs } from './locale-types';
@@ -190,18 +162,22 @@ t9n.locale.trySet(navigator.language);
 </style>
 ```
 
-**Usage**
+## RFC 5646
 
-```html
-<T args={['pageOne.headline']}>
-  <!-- //injects a <span /> and some styles depending on the build mode and dictionary hit --></T
->
-```
+As described in [RFC 5646: Tags for Identifying Languages (also known as BCP 47)](https://datatracker.ietf.org/doc/html/rfc5646) language tags with subtags are allow. For example:
 
-If the translation includes parameter that should be interpolated use the params prop:
-
-```html
-<T args={['pageOne.headline', {params:{entranceNumber: 1}}]}>
-  <!-- //injects a <span /> and some styles depending on the build mode and dictionary hit --></T
->
+```typescript
+const languages = [
+  //...
+  {
+    locale: 'en',
+    name: 'English',
+    dictionary: en,
+  },
+  {
+    locale: 'en-US',
+    name: 'English (US)',
+    dictionary: enUS,
+  },
+] as const;
 ```
