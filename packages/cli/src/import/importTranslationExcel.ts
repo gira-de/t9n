@@ -28,7 +28,7 @@ const config = new Conf({
 /**
  *
  * @param inputPath A string representing the inputPath where the translation.xlsx is.
- * @param outputPath (optional) A string represention the outputPath where the resulting <langugage>.json should be created.
+ * @param outputPath (optional) A string representation the outputPath where the resulting <language>.json should be created.
  * @example
  * ```typescript
  * const res = importTranslation({inputPath: path.join(process.cwd(), 'translation.xlsx')})

@@ -1,5 +1,5 @@
 {
   "version": "0.0.1",
   "worksheetName": "Translation",
-  "languages": ["meta", "de", "en"]
+  "languages": ["meta", "de", "en", "fr"]
 }

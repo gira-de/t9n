@@ -16,10 +16,10 @@ export function generateTypes(inputFilename: string): string {
     const params = getParams(flatObject[key] as string);
 
     if (params) {
-      const formatedParams = params
+      const formattedParams = params
         .map((param) => `${param}: string`)
         .join(', ');
-      translationTypes.push(`['${key}', {params: {${formatedParams}}}]`);
+      translationTypes.push(`['${key}', {params: {${formattedParams}}}]`);
     } else {
       translationTypes.push(`['${key}']`);
     }

@@ -72,7 +72,7 @@ function exportTranslationExcel({
    * ]
    */
 
-  // Remove the __filename attribute from meta.json since we don't need it in the comming iteration.
+  // Remove the __filename attribute from meta.json since we don't need it in the upcoming iteration.
   delete metaData[0].__filename;
 
   const data = Object.entries(metaData[0]).map(([translationKey, meta]) => {

@@ -33,7 +33,7 @@ export type TranslationConfig<TDict, TLocale> = Readonly<{
  * WORKAROUND: use currying as a workaround for https://github.com/microsoft/TypeScript/issues/16597
  * @returns
  */
-export function newT9n<
+export default function t9n<
   TArgs extends [key: string, options?: { params: Record<string, unknown> }],
 >() {
   return function <
