@@ -19,7 +19,6 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "@gira/t9n-cli": "workspace:*",
-    "@gira/t9n-svelte": "workspace:*"
+    "@gira-de/t9n-svelte": "0.0.2"
   }
 }
