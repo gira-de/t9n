@@ -14,14 +14,14 @@ const fallbackDictionary = {
   },
 };
 
-const fallbackLanguage = {
+const translationFallback = {
   locale: 'meta',
   name: 'Fallback',
   dictionary: fallbackDictionary,
 } as const;
 
 const languages = [
-  fallbackLanguage,
+  translationFallback,
   {
     locale: 'de',
     name: 'German',
@@ -63,7 +63,7 @@ const {
   $ti,
 } = t9n<TranslationArgs>()({
   languages,
-  fallbackLanguage,
+  translationFallback,
   logFallback: noop,
   logMissing: noop,
 });
@@ -84,54 +84,54 @@ describe('testing locale', () => {
   test('invalid locale id', () => {
     // @ts-expect-error expect error due to an invalid locale id
     locale.set('asdf');
-    expect(get(locale)).toEqual(fallbackLanguage.locale);
+    expect(get(locale)).toEqual(translationFallback.locale);
   });
 });
 
 describe('trySet', () => {
   test('set locale: exact match', () => {
-    locale.trySet('en');
+    locale.trySet('en', 'de');
     expect(get(locale)).toEqual('en');
 
-    locale.trySet('de');
+    locale.trySet('de', 'de');
     expect(get(locale)).toEqual('de');
 
-    locale.trySet('de-DE');
+    locale.trySet('de-DE', 'de');
     expect(get(locale)).toEqual('de-DE');
   });
 
   test('set locale: base match', () => {
-    locale.trySet('en-US');
+    locale.trySet('en-US', 'de');
     expect(get(locale)).toEqual('en');
 
-    locale.trySet('de-DE-123');
+    locale.trySet('de-DE-123', 'de');
     expect(get(locale)).toEqual('de');
   });
 
   test('set locale: sub match', () => {
-    locale.trySet('es');
+    locale.trySet('es', 'de');
     expect(get(locale)).toEqual('es-AR');
 
-    locale.trySet('fi');
+    locale.trySet('fi', 'de');
     expect(get(locale)).toEqual('fi-FI-123');
   });
 
   test('set locale fail: set fallback', () => {
-    locale.trySet('');
-    expect(get(locale)).toEqual(fallbackLanguage.locale);
+    locale.trySet('', 'de');
+    expect(get(locale)).toEqual('de');
 
-    locale.trySet('zz');
-    expect(get(locale)).toEqual(fallbackLanguage.locale);
+    locale.trySet('zz', 'de');
+    expect(get(locale)).toEqual('de');
 
-    locale.trySet('zz-US');
-    expect(get(locale)).toEqual(fallbackLanguage.locale);
+    locale.trySet('zz-US', 'de');
+    expect(get(locale)).toEqual('de');
   });
 });
 
 describe('testing dictionary with showHit: undefined', () => {
   test('should have a dictionary', () => {
     locale.set('meta');
-    expect(get(locale)).toEqual(fallbackLanguage.locale);
+    expect(get(locale)).toEqual(translationFallback.locale);
   });
 
   test('should return a translation for a key', () => {

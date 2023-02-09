@@ -24,7 +24,7 @@ export type Language<TDict, TLocale> = Readonly<{
 
 export type TranslationConfig<TDict, TLocale> = Readonly<{
   languages: ReadonlyArray<Language<DeepPartial<TDict>, TLocale>>;
-  fallbackLanguage: Language<TDict, TLocale>;
+  translationFallback: Language<TDict, TLocale>;
   logFallback: (translationKey: string, currentLanguage: string) => void;
   logMissing: (translationKey: string, currentLanguage: string) => void;
 }>;
@@ -47,7 +47,7 @@ export default function t9n<
     let language: Language<
       DeepPartial<TDict>,
       TLocale
-    > = config.fallbackLanguage;
+    > = config.translationFallback;
 
     const isLocale = (locale: string): locale is TLocale =>
       locals.includes(locale);
@@ -59,10 +59,10 @@ export default function t9n<
       set: ($newLocale: TLocale) => {
         language =
           config.languages.find((l) => l.locale === $newLocale) ??
-          config.fallbackLanguage;
+          config.translationFallback;
         _locale.set(language.locale);
       },
-      trySet: (unsafeLocale: string) => {
+      trySet: (unsafeLocale: string, fallbackLanguage: TLocale) => {
         // try set exact match
         if (isLocale(unsafeLocale)) {
           locale.set(unsafeLocale);
@@ -86,7 +86,7 @@ export default function t9n<
         }
 
         // set fallback language
-        locale.set(config.fallbackLanguage.locale);
+        locale.set(fallbackLanguage);
       },
     };
 
@@ -130,12 +130,12 @@ export default function t9n<
       const translation = findPropByString(language.dictionary, translationKey);
 
       if (!translation) {
-        const fallbackLanguage = findPropByString(
-          config.fallbackLanguage.dictionary,
+        const translationFallback = findPropByString(
+          config.translationFallback.dictionary,
           translationKey,
         );
 
-        if (!fallbackLanguage) {
+        if (!translationFallback) {
           config.logMissing(translationKey, language.locale);
           return {
             hit: 'none',
@@ -145,7 +145,7 @@ export default function t9n<
           config.logFallback(translationKey, language.locale);
           return {
             hit: 'fallbackDictionary',
-            text: renderString(fallbackLanguage, params),
+            text: renderString(translationFallback, params),
           };
         }
       } else {
