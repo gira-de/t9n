@@ -1,6 +1,6 @@
 # t9n Lib
 
-> A Svelte internationalization (i18n) solution for @gira-de/t9n.
+> A Svelte translation (t9n) solution for @gira-de/t9n.
 
 See a working example here: [t9n@Stackblitz](https://stackblitz.com/github/gira-de/t9n/tree/dev/examples/svelte-t9n).
 
@@ -59,12 +59,12 @@ Now _de.json_ can be referenced during initialization of the t9n library:
   ] as const;
 
   // default language
-  const fallbackLanguage = languages[0];
+  const translationFallback= languages[0];
 
   // logging functions
   const logFallback = (translationKey: string, currentLanguage: string) =>
     console.warn(
-      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the fallback language: «${fallbackLanguage.locale}».`,
+      `[t9n] The translationKey «${translationKey}» is missing within «${currentLanguage}». Using the translation fallback: «${translationFallback.locale}».`,
     );
 
   const logMissing = (translationKey: string, currentLanguage: string) =>
@@ -75,7 +75,7 @@ Now _de.json_ can be referenced during initialization of the t9n library:
   // locale, t and ti are Svelte Stores. Use the locale Store to change the language and t/ti to get the translation.
   const { locale, t, ti } = t9n<TranslationArgs>()({
     languages,
-    fallbackLanguage,
+    translationFallback,
     logFallback,
     logMissing,
   });
@@ -93,7 +93,7 @@ To finally get translation by keys, you can use `t` or `ti` Svelte Stores:
 ```typescript
 const { locale, t, ti } = t9n<TranslationArgs>()({
   languages,
-  fallbackLanguage,
+  translationFallback,
   logFallback,
   logMissing,
 });
@@ -124,7 +124,10 @@ To set the language use the `locale` method. If you want to detect the language 
 ```typescript
 const { locale } = t9n<TranslationArgs>()({...});
 
-locale.trySet(navigator.language);
+// Tries to set the language according to the current browser settings.
+// If the current browser language is not supported by the list of translations available,
+// use one of the defined languages as fallback (in this case 'en').:
+locale.trySet(navigator.language, 'en');
 ```
 
 ### Create a T component
