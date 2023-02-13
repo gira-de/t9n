@@ -126,7 +126,7 @@ const { locale } = t9n<TranslationArgs>()({...});
 
 // Tries to set the language according to the current browser settings.
 // If the current browser language is not supported by the list of translations available,
-// use language 'en':
+// use one of the defined languages as fallback (in this case 'en').:
 locale.trySet(navigator.language, 'en');
 ```
 

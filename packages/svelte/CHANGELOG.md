@@ -1,5 +1,22 @@
 # @gira-de/t9n-svelte
 
+## 2.0.0
+
+### Major Changes
+
+- `trySet` now sets a fallback language if the given default locale is not available. The fallback language is the second parameter of `trySet`.
+
+  ```typescript
+   trySet: (unsafeLocale: string, fallbackLanguage: TLocale) => {
+          // ...
+
+          // set fallback language
+          locale.set(fallbackLanguage);
+        },
+  ```
+
+  Aside from that the _fallbackLanguage_ is now renamed to **translationFallback** to be more specific.
+
 ## 1.0.0
 
 ### Major Changes
