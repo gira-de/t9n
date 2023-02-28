@@ -1,5 +1,12 @@
 # @gira-de/t9n-svelte
 
+## 2.0.1
+
+### Patch Changes
+
+- 7679835: Add UMD support
+- 6b132e6: Add installation script
+
 ## 2.0.0
 
 ### Major Changes
