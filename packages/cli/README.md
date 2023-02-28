@@ -25,10 +25,10 @@ Everything here is built around the following workflow. Sure, use it however you
 
 ```shell
 # using npm
-npm install @gira/t9n-cli -D
+npm install @gira-de/t9n-cli -D
 
 # or using yarn
-yarn add @gira/t9n-cli -D
+yarn add @gira-de/t9n-cli -D
 ```
 
 You should also be able to use the command line tool via npx:
