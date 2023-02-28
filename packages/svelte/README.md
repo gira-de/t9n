@@ -4,6 +4,12 @@
 
 See a working example here: [t9n@Stackblitz](https://stackblitz.com/github/gira-de/t9n/tree/dev/examples/svelte-t9n).
 
+## Installation
+
+```bash
+npm install @gira-de/t9n-svelte
+```
+
 ## Initialization
 
 To get started, the following files are required:
