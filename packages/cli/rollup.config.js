@@ -8,4 +8,5 @@ export default {
     format: 'es',
   },
   plugins: [typescript(), shebang()],
+  external: ['meow', 'ora', 'node:fs', 'conf', 'node:path', 'xlsx', 'prettier'],
 };

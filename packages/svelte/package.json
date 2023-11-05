@@ -46,7 +46,7 @@
   "scripts": {
     "build": "pnpm run build:esm && pnpm run build:umd",
     "build:esm": "tsc -P ./tsconfig.json",
-    "build:umd": "rollup lib/index.js --format umd --sourcemap -o lib/index.umd.js --name 't9n'",
+    "build:umd": "rollup --config",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "jest ./src"

@@ -3,5 +3,4 @@ node_modules/
 bin/
 lib/
 types/
-.npmrc
 .DS_Store
