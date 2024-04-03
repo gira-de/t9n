@@ -1,6 +1,6 @@
 import t9n from '.';
-import { noop } from 'svelte/internal';
 import { get } from 'svelte/store';
+import { describe, test, expect, beforeAll } from 'vitest';
 
 const fallbackDictionary = {
   test: {
@@ -64,8 +64,8 @@ const {
 } = t9n<TranslationArgs>()({
   languages,
   translationFallback,
-  logFallback: noop,
-  logMissing: noop,
+  logFallback: () => {},
+  logMissing: () => {},
 });
 
 describe('testing locale', () => {

@@ -5,3 +5,5 @@ lib/
 types/
 .npmrc
 .DS_Store
+dist/
+.svelte-kit/

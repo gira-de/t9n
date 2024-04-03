@@ -1,4 +1,5 @@
 import { findPropByString, renderString } from './utils';
+import { describe, test, expect } from 'vitest';
 
 describe('testing parameters', () => {
   test('should return with one param (with spaces: {{ param  }})', () => {
