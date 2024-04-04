@@ -1,5 +1,11 @@
 # @gira-de/t9n-cli
 
+## 1.0.1
+
+### Patch Changes
+
+- 64ca4d8: Updating dependencies
+
 ## 1.0.0
 
 ### Major Changes

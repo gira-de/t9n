@@ -1,5 +1,11 @@
 # @gira-de/t9n-svelte
 
+## 2.0.2
+
+### Patch Changes
+
+- 64ca4d8: Updating dependencies
+
 ## 2.0.1
 
 ### Patch Changes
