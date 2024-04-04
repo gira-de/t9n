@@ -1,6 +1,8 @@
+import { describe, test, expect, beforeAll } from 'vitest';
 import t9n from '.';
-import { noop } from 'svelte/internal';
 import { get } from 'svelte/store';
+
+const noop = () => {};
 
 const fallbackDictionary = {
   test: {

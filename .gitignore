@@ -5,3 +5,7 @@ lib/
 types/
 .npmrc
 .DS_Store
+.svelte-kit/
+dist/
+yarn-error.log
+report/

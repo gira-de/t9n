@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest';
 import { findPropByString, renderString } from './utils';
 
 describe('testing parameters', () => {
