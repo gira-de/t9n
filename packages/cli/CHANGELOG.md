@@ -1,5 +1,11 @@
 # @gira-de/t9n-cli
 
+## 1.0.2
+
+### Patch Changes
+
+- 4395add: Fix import when translation for some keys are missing
+
 ## 1.0.1
 
 ### Patch Changes
