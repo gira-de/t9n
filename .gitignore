@@ -1,6 +1,6 @@
 out/
 node_modules/
-bin/
+/bin/
 lib/
 types/
 .npmrc
