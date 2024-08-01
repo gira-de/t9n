@@ -1,5 +1,6 @@
 import { importTranslation } from './importTranslationExcel';
 import meow from 'meow';
+import { writeFileSync } from 'node:fs';
 import ora from 'ora';
 
 function importCli(_cli: typeof cli) {
@@ -17,7 +18,7 @@ function importCli(_cli: typeof cli) {
   const inputPath = input[1];
   const outputPath = flags.output;
 
-  importTranslation({ inputPath, outputPath });
+  importTranslation({ inputPath, outputPath, outputSink: writeFileSync });
 
   spinner.stop();
   process.exit(0);
