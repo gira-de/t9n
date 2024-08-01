@@ -12,5 +12,8 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.0"
+  },
+  "engines": {
+    "pnpm": "^9.0.0"
   }
 }
