@@ -45,6 +45,7 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "check": "tsc --outDir out",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test:unit": "jest ./src",
