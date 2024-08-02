@@ -1,5 +1,13 @@
 # @gira-de/t9n-svelte
 
+## 2.1.0
+
+### Minor Changes
+
+Fixes:
+
+- Mitigate security vulnerability in various dependencies by updating to newer versions
+
 ## 2.0.2
 
 ### Patch Changes
