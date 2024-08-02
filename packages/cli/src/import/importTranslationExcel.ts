@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import prettier from 'prettier';
 import { read, utils } from 'xlsx';
+import stableStringify from 'json-stable-stringify';
 
 /**
  * Config handling
@@ -68,7 +69,7 @@ function importTranslation({
     const data = deflattenObject(temp.reduce(reduceRow, {}));
 
     // format file with prettier
-    const formattedData = prettier.format(JSON.stringify(data), {
+    const formattedData = prettier.format(stableStringify(data), {
       parser: 'json-stringify',
       tabWidth: 2,
       singleQuote: true,
