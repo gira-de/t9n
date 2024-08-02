@@ -1,5 +1,17 @@
 # @gira-de/t9n-cli
 
+## 1.1.0
+
+### Minor Changes
+
+- Feature for import command: Sort imported files alphabetically to create a stable, diff-able output
+
+Fixes:
+
+- Mitigate security vulnerability in various dependencies by updating to newer versions
+- Fixes error "cannot save file" that can happen in some environments
+- Fixes error that "t9n import" will create fields with "null" values when cells are empty excel sheet
+
 ## 1.0.2
 
 ### Patch Changes
