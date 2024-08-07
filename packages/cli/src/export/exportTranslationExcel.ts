@@ -2,6 +2,9 @@ import { flattenObject, getFilesFromFolder } from '../utils';
 import Conf from 'conf';
 import path from 'node:path';
 import * as XLSX from 'xlsx';
+import fs from 'fs';
+
+XLSX.set_fs(fs);
 
 /**
  * Config handling

@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import prettier from 'prettier';
 import { read, utils } from 'xlsx';
+import stableStringify from 'json-stable-stringify';
 
 /**
  * Config handling
@@ -37,36 +38,38 @@ const config = new Conf({
 function importTranslation({
   inputPath,
   outputPath = process.cwd(),
+  outputSink = writeFileSync,
 }: {
   inputPath: string;
   outputPath?: string;
+  outputSink: (path: string, data: string | NodeJS.ArrayBufferView) => void;
 }) {
   const buf = readFileSync(inputPath);
   const workbook = read(buf);
 
   const worksheet = workbook.Sheets[config.get('worksheetName') as string];
 
-  const temp: {
+  type Row = {
     translationKey: string;
     meta: string;
     [key: string]: string;
-  }[] = utils.sheet_to_json(worksheet);
+  };
+  const temp: Row[] = utils.sheet_to_json(worksheet);
 
   const languages = Object.keys(temp[0]).slice(2);
 
   languages.forEach((language) => {
-    const data = deflattenObject(
-      temp.reduce(
-        (acc, row) => ({
-          [row.translationKey]: row[language].length ? row[language] : null,
-          ...acc,
-        }),
-        {},
-      ),
-    );
+    function reduceRow(result: Record<string, string>, row: Row) {
+      const translation = row[language];
+      if (translation !== undefined && translation.length > 0) {
+        result[row.translationKey] = translation;
+      }
+      return result;
+    }
+    const data = deflattenObject(temp.reduce(reduceRow, {}));
 
     // format file with prettier
-    const formattedData = prettier.format(JSON.stringify(data), {
+    const formattedData = prettier.format(stableStringify(data), {
       parser: 'json-stringify',
       tabWidth: 2,
       singleQuote: true,
@@ -75,7 +78,7 @@ function importTranslation({
       endOfLine: 'auto',
     });
 
-    writeFileSync(path.join(outputPath, `/${language}.json`), formattedData);
+    outputSink(path.join(outputPath, `/${language}.json`), formattedData);
   });
 
   return outputPath;
