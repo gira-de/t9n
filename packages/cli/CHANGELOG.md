@@ -1,5 +1,11 @@
 # @gira-de/t9n-cli
 
+## 1.2.0
+
+### Minor Changes
+
+- Allow translation keys to have purely numeric components
+
 ## 1.1.0
 
 ### Minor Changes
