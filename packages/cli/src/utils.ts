@@ -36,27 +36,56 @@ export function flattenObject(
   return flattenRecursive(obj);
 }
 
+function setValueByPath(
+  object: Record<string, unknown>,
+  fullPath: string,
+  path: string[],
+  value: unknown,
+): void {
+  switch (path.length) {
+    case 0:
+      return;
+    case 1:
+      object[path[0]] = value;
+      break;
+    default:
+      const currentPath = path[0];
+      if (currentPath in object) {
+        const objectAtCurrentPath = object[currentPath];
+        if (typeof objectAtCurrentPath === 'object') {
+          setValueByPath(
+            objectAtCurrentPath as Record<string, unknown>,
+            fullPath,
+            path.slice(1),
+            value,
+          );
+        } else {
+          throw TypeError(
+            `Path ${fullPath} already exists, but is not an object, but ${objectAtCurrentPath} instead`,
+          );
+        }
+      } else {
+        const childObject = {};
+        object[currentPath] = childObject;
+        setValueByPath(childObject, fullPath, path.slice(1), value);
+      }
+      break;
+  }
+}
+
 /**
  * Deflattens the provided object
  *
  * @param ob The object to deflatten
  */
-export function deflattenObject(ob: Record<string, string>) {
+export function deflattenObject(object: Record<string, string>) {
   const result = {};
-  for (const i in ob) {
-    if (Object.prototype.hasOwnProperty.call(ob, i)) {
-      const keys = i.match(/^\.+[^.]*|[^.]*\.+$|(?:\.{2,}|[^.])+(?:\.+$)?/g);
-      keys.reduce((r, e, j) => {
-        return (
-          r[e] ||
-          (r[e] = isNaN(Number(keys[j + 1]))
-            ? keys.length - 1 === j
-              ? ob[i]
-              : {}
-            : [])
-        );
-      }, result);
-    }
+  for (const [key, value] of Object.entries(object)) {
+    const path = key
+      .split('.')
+      .map((pathComponent: string) => pathComponent.trim())
+      .filter((pathComponent: string) => pathComponent.length > 0);
+    setValueByPath(result, key, path, value);
   }
   return result;
 }
