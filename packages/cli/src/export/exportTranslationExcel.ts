@@ -3,6 +3,7 @@ import Conf from 'conf';
 import path from 'node:path';
 import * as XLSX from 'xlsx';
 import fs from 'fs';
+import { SourceControlManager } from './sourceControlManager';
 
 XLSX.set_fs(fs);
 
@@ -139,4 +140,30 @@ function exportTranslationExcel({
   }
 }
 
-export { exportTranslationExcel, getFilesFromFolder };
+async function snapshotAndCommit(inputPath: string, commitMessage: string, sourceControlManager: SourceControlManager): Promise<void> {
+  try {
+      if (!fs.existsSync(inputPath)) {
+          console.error(`File not found: ${inputPath}`);
+      }
+
+      const currentContent = fs.readFileSync(inputPath, 'utf-8');
+      const lastCommitContent = await sourceControlManager.show(inputPath);
+
+      if (currentContent === lastCommitContent) {
+          console.log('No changes detected. No new snapshot commit necessary.');
+          return;
+      }
+
+      const snapshotPath = `${inputPath}.snapshot`;
+      fs.writeFileSync(snapshotPath, currentContent);
+      await sourceControlManager.add(snapshotPath);
+      await sourceControlManager.commit(commitMessage, snapshotPath);
+
+      console.log(`Snapshot created and committed: ${snapshotPath}`);
+  } catch (error) {
+      console.error(`Error creating snapshot and committing: ${error.message}`);
+  }
+}
+
+
+export { exportTranslationExcel, getFilesFromFolder, snapshotAndCommit };

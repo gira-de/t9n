@@ -55,7 +55,7 @@ describe('Test check', () => {
     });
   });
 
-  test('should cound missing parameters', () => {
+  test('should count missing parameters', () => {
     const res = validateLanguageJson({
       reference: { keyOne: 'foo {{param}}', keyTwo: 'bar', keyThree: 'baz' },
       data: { __filename: 'test', keyOne: 'foo' },

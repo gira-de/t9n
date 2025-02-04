@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "conf": "^10.2.0",
+    "diff": "^7.0.0",
     "json-stable-stringify": "^1.1.1",
     "meow": "^10.1.5",
     "ora": "^8.0.1",
