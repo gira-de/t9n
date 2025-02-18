@@ -73,6 +73,26 @@ describe('Test export translation.xlsx', () => {
       },
     ]);
   });
+
+  test('Ensure devOnly keys are not exported', () => {
+    const storagePath = exportTranslationExcel({ inputPath, outputPath });
+
+    const buf = fs.readFileSync(storagePath);
+    const workbook = read(buf);
+
+    const worksheet = workbook.Sheets['Translation'];
+
+    const columns: {
+      translationKey: string;
+      meta: string;
+      [key: string]: string;
+    }[] = utils.sheet_to_json(worksheet);
+
+    // Ensure the devOnly keys are not present in the exported file
+    columns.forEach((row) => {
+      expect(row.translationKey).not.toContain('devOnly');
+    });
+  });
 });
 
 describe('snapshotAndCommit', () => {

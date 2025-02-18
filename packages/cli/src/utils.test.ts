@@ -72,7 +72,7 @@ describe('getParams', () => {
 });
 
 describe('getFilesFromFolder', () => {
-  test('Find a meta.json in the provided folder', () => {
+  test('should find a meta.json in the provided folder', () => {
     const inputPath = path.join(process.cwd(), `tests/fixtures`);
 
     const res = getFilesFromFolder(inputPath);

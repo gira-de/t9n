@@ -106,10 +106,19 @@ export function getFilesFromFolder(
   const jsonList = fs
     .readdirSync(inputPath)
     .filter((file) => path.extname(file) === '.json')
-    .map((file) => ({
-      __filename: path.basename(file, '.json'),
-      ...JSON.parse(fs.readFileSync(path.join(inputPath, file)).toString()),
-    }));
+    .map((file) => {
+      const jsonData = JSON.parse(fs.readFileSync(path.join(inputPath, file)).toString());
+
+      // Remove the "devOnly" key and its contents from the JSON data
+      if (jsonData.devOnly) {
+        delete jsonData.devOnly;
+      }
+
+      return {
+        __filename: path.basename(file, '.json'),
+        ...jsonData,
+      };
+    });
 
   if (!!jsonList.find((file) => file.__filename === 'meta')) return jsonList;
   else

@@ -69,4 +69,27 @@ describe('Test check', () => {
       missingParams: ['keyOne'],
     });
   });
+
+  test('should ignore devOnly keys', () => {
+    const res = validateLanguageJson({
+      reference: {
+        keyOne: 'foo',
+        keyTwo: 'bar',
+        devOnly: 'This is a dev-only text'
+      },
+      data: {
+        __filename: 'test',
+        keyOne: 'foo',
+        keyTwo: 'bar'
+      }
+    });
+
+    expect(res).toStrictEqual({
+      __filename: 'test',
+      translationKeys: 2, // devOnly keys should not be counted
+      missingTranslationKeys: 0, // devOnly keys should not affect missing keys
+      coverage: 1,
+      missingParams: []
+    });
+  });
 });

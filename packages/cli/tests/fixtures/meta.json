@@ -1,4 +1,7 @@
 {
+  "devOnly": {
+    "foo": "This is some text that is only for development and thus should not be exported!"
+  },
   "pageOne": {
     "headline": "This is a headline"
   },
